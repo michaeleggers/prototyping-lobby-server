@@ -8,14 +8,15 @@ const port = process.env.PORT || 3000
 aliveHosts = []
 
 function isHostKnown(ip) {
-    aliveHosts.forEach((h) => {
-        if (h.ip === ip) {
+    result = false
+    for (let i = 0; i < aliveHosts.length; i++) {
+        host = aliveHosts[i]
+        if (host.ip === ip) {
             console.log('Host known!')
             return true
-        }
-        console.log('New Host!')
-        return false
-    })
+        }        
+    }
+    return false
 }
 
 app.get('/', (req, resp) => {
