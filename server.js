@@ -10,9 +10,10 @@ aliveHosts = []
 
 app.get('/', (req, resp) => {
     ip = req.socket.remoteAddress
+    forwarded_ip = req.headers['x-forwarded-for'] || "no-fwd-ip"
     hostname = req.hostname
     console.log(hostname + '@' + ip + ' wants to connect...')
-    aliveHosts.push({hostname, ip}) // TODO: Check if host already connected.
+    aliveHosts.push({hostname, ip, forwarded_ip}) // TODO: Check if host already connected.
     
     // if (req.rawHeaders != undefined) {
     //     if (aliveHosts.indexOf(req.rawHeaders[1]) < 0) {
