@@ -7,13 +7,28 @@ const port = process.env.PORT || 3000
 
 aliveHosts = []
 
+function isHostKnown(ip) {
+    aliveHosts.forEach((h) => {
+        if (h.ip === ip) {
+            console.log('Host known!')
+            return true
+        }
+        console.log('New Host!')
+        return false
+    })
+}
 
 app.get('/', (req, resp) => {
-    ip = req.socket.remoteAddress
-    forwarded_ip = req.headers['x-forwarded-for'] || "no-fwd-ip"
+    // ip = req.socket.remoteAddress
+    ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
     hostname = req.hostname
     console.log(hostname + '@' + ip + ' wants to connect...')
-    aliveHosts.push({hostname, ip, forwarded_ip}) // TODO: Check if host already connected.
+    if ( (aliveHosts.length === 0) || (isHostKnown(ip) === false) ) {
+        aliveHosts.push({hostname, ip}) // TODO: Check if host already connected.
+    }
+    else {
+        console.log('Host with IP ' + ip + ' already connected!')
+    }
     
     // if (req.rawHeaders != undefined) {
     //     if (aliveHosts.indexOf(req.rawHeaders[1]) < 0) {
