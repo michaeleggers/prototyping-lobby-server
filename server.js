@@ -35,4 +35,4 @@ const checkIfHostIsAlive = function() {setInterval(() => {
     }
 }, 10000)}
 
-checkIfHostIsAlive()
+// checkIfHostIsAlive()
