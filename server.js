@@ -20,7 +20,7 @@ app.get('/', (req, resp) => {
     //     }
     // }
     console.log(aliveHosts)
-    resp.status(200).send('HELO')
+    resp.status(200).send(JSON.stringify(aliveHosts))
 })
 
 app.listen(port, () => {
